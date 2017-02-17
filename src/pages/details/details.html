@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar #content>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      SimSimV2 - Details
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h1>Hello <ion-icon name="happy"></ion-icon></h1>
+  <ion-item>
+    <ion-label>Start Date</ion-label>
+    <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>Start Time</ion-label>
+    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="event.timeStarts"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>Ends</ion-label>
+    <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.timeEnds"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <button ion-button (click)="presentLoading()">Load</button>
+  </ion-item>
+  <ion-item>
+    <button ion-button (click)="popToRoot()">ToRoot</button>
+  </ion-item>
+  <ion-item>
+    <button ion-button (click)="getNewImage()">NewImage</button>
+  </ion-item>
+  <ion-item>
+    <button ion-button (click)="getTraktStuff()">Trakt Stuff</button>
+  </ion-item>
+  <img *ngIf="source != null" [src]='source' style="width: 100%;">
+  <ion-list>
+      <ion-item>
+          <strong>Trending Movies</strong>
+      </ion-item>
+      <ion-item *ngFor="let info of traktInfo">
+          {{info.movie.title}}
+      </ion-item>
+    </ion-list>
+</ion-content>

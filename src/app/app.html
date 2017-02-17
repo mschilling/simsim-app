@@ -1,0 +1,21 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Pages</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+          <ion-icon name="happy"></ion-icon>
+      </ion-item>
+      <ion-item [class.activeHighlight]="checkActive(p)" *ngFor="let p of pages">
+        <button ion-button menuClose (click)="openPage(p)">
+            {{p.title}}
+        </button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content></ion-nav>
