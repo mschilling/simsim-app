@@ -26,7 +26,7 @@ export class MyApp {
       {title: "Home", component: HomePage},
       {title: "Details", component: DetailsPage}
     ];
-    this.activePage = this.pages[0];
+    this.activePage = this.pages[1];
   }
 
   openPage(page){

@@ -1,18 +1,7 @@
-<ion-header>
-  <ion-navbar #content>
-    <button ion-button menuToggle icon-only>
-      <ion-icon name='menu'></ion-icon>
-    </button>
-    <ion-title>
-      SimSimV2 - Home
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding text-center [ngStyle]="{'background-image': 'url(../../assets/img/' + bgTemp + ')'}">
-  <div style="height: 100%;" *ngIf="viewable">
-    <div style="height: 60%;">
-      <ion-row id="icon-row" style="font-size: 40px; height: 10%">
+<ion-content padding text-center>
+  <div *ngIf="viewable">
+    <div [ngStyle]="{'background-image': 'url(../../assets/img/' + bgTemp + ')'}">
+      <ion-row id="icon-row" style="font-size: 40px; height: 40px">
         <ion-col width-25><ion-icon name="{{icons[0]}}"></ion-icon></ion-col>
         <ion-col width-25><ion-icon name="{{icons[1]}}"></ion-icon></ion-col>
         <ion-col width-25><ion-icon name="{{icons[2]}}"></ion-icon></ion-col>
@@ -25,7 +14,7 @@
         <ion-col width-25>___</ion-col>
       </ion-row>
     </div>
-    <div>
+    <div class="stick-to-bottom">
       <ion-row>
         <ion-col width-33><button ion-button block outline icon-right (click)="add(1, 'heart')">Heart<ion-icon name="heart"></ion-icon></button></ion-col>
         <ion-col width-33><button ion-button block outline icon-right (click)="add(2, 'aperture')">Aperture<ion-icon name="aperture"></ion-icon></button></ion-col>

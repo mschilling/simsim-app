@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
-import {DetailsPage} from '../details/details';
+import { DetailsPage } from '../details/details';
 
 @Component({
   selector: 'page-home',
@@ -25,11 +25,11 @@ export class HomePage {
         if(this.passcode == "2468"){
           console.log("Good Code");
           this.state = "switch";
-          this.showAlert("Correct Code!", "The Correct code has been filled in.");
+          this.showAlert("Correct Code!", "Gate will open after this popup");
         }
         else{
-          console.log("Bad Code");
-          this.showAlert("Wrong Code!", "The Wrong code has been filled in.");
+          console.log("Wrong Code");
+          this.showAlert("Wrong Code!", "Gate will not open. Try another");
         }
       }
     }
@@ -56,8 +56,10 @@ export class HomePage {
           if(this.state == "switch"){
             //this.viewable = false;
             //this.bgTemp = "matrix.gif";
-            this.navCtrl.push(DetailsPage);
+            this.navCtrl.setRoot(DetailsPage);
           }
+          this.passcode = "";
+          this.icons = [];
         }
       }
     ]
