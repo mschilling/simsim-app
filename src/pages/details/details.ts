@@ -1,48 +1,47 @@
 import { Component } from '@angular/core';
-import { NavController, MenuController, LoadingController } from 'ionic-angular';
+import { NavController, MenuController, LoadingController, ToastController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 import { RandomData } from '../../providers/random-data';
+
+import { ApiPagePage } from '../api-page/api-page';
 
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'details.html'
+  templateUrl: 'details.html',
+  providers: [RandomData]
 })
 export class DetailsPage {
-  source;
-  traktInfo;
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public menuCtrl: MenuController, public dataCtrl: RandomData) {
+  source; traktInfo; localData; geoData = {lat: 0, lon: 0};
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public menuCtrl: MenuController, public dataCtrl: RandomData, public toastCtrl: ToastController) {
     this.menuCtrl.enable(true);
-  }
-  public event = {
-    month: '1990-02-19',
-    timeStarts: '07:43',
-    timeEnds: '1990-02-20'
   }
 
   presentLoading() {
-    let loader = this.loadingCtrl.create({
-      content: "Please wait...",
-      duration: 3000
+    let loader = this.toastCtrl.create({
+      message: "Getting Location..."
     });
     loader.present();
     Geolocation.getCurrentPosition().then(pos => {
-      console.log('lat: ' + pos.coords.latitude + ', lon: ' + pos.coords.longitude);
+      this.geoData.lat = pos.coords.latitude;
+      this.geoData.lon = pos.coords.longitude;
+      loader.dismiss();
     });
   }
 
-  popToRoot(){
-    this.navCtrl.popToRoot();
-  }
-
   getNewImage(){
-    console.log("click");
-    this.source = this.dataCtrl.getRemoteData();
+    let loader = this.toastCtrl.create({
+      message: "Loading image"
+    });
+    loader.present();
+    this.dataCtrl.getRemoteData().then(data => {
+      this.source = data;
+      loader.dismiss();
+    });
   }
 
-  getTraktStuff(){
-    this.traktInfo = this.dataCtrl.getTraktStuff();
-    console.log("clickerdieclick");
+  openTraktPage(){
+    this.navCtrl.push(ApiPagePage);
   }
 
 }

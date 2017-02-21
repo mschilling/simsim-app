@@ -4,6 +4,9 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
 import { DetailsPage } from '../pages/details/details';
+import { ApiPagePage } from '../pages/api-page/api-page';
+import { AccountPage } from '../pages/account/account';
+import { TutorialPage } from '../pages/tutorial/tutorial';
 
 
 @Component({
@@ -23,8 +26,11 @@ export class MyApp {
       Splashscreen.hide();
     });
     this.pages = [
-      {title: "Home", component: HomePage},
-      {title: "Details", component: DetailsPage}
+      {title: "Login", component: HomePage},
+      {title: "Details", component: DetailsPage},
+      {title: "API", component: ApiPagePage},
+      {title: "Account", component: AccountPage},
+      {title: "Tutorial", component: TutorialPage}
     ];
     this.activePage = this.pages[1];
   }

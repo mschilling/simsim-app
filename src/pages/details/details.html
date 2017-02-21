@@ -12,36 +12,18 @@
 <ion-content padding>
   <h1>Hello <ion-icon name="happy"></ion-icon></h1>
   <ion-item>
-    <ion-label>Start Date</ion-label>
-    <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label>Start Time</ion-label>
-    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="event.timeStarts"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label>Ends</ion-label>
-    <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.timeEnds"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <button ion-button (click)="presentLoading()">Load</button>
-  </ion-item>
-  <ion-item>
-    <button ion-button (click)="popToRoot()">ToRoot</button>
+    <button ion-button (click)="presentLoading()">Get GeoLocation</button>
+    <div *ngIf="geoData != null">
+      lat: {{geoData.lat}}<br>
+      lon: {{geoData.lon}}<br>
+    </div>
   </ion-item>
   <ion-item>
     <button ion-button (click)="getNewImage()">NewImage</button>
   </ion-item>
+  <h3 *ngIf="source != null">{{source.title}}</h3>
+  <img *ngIf="source != null" [src]='source.preview.images[0].variants.gif.source.url' style="width: 100%;">
   <ion-item>
-    <button ion-button (click)="getTraktStuff()">Trakt Stuff</button>
+    <button ion-button (click)="openTraktPage()">Open Trakt API Stuff</button>
   </ion-item>
-  <img *ngIf="source != null" [src]='source' style="width: 100%;">
-  <ion-list>
-      <ion-item>
-          <strong>Trending Movies</strong>
-      </ion-item>
-      <ion-item *ngFor="let info of traktInfo">
-          {{info.movie.title}}
-      </ion-item>
-    </ion-list>
 </ion-content>

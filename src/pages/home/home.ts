@@ -25,11 +25,11 @@ export class HomePage {
         if(this.passcode == "2468"){
           console.log("Good Code");
           this.state = "switch";
-          this.showAlert("Correct Code!", "Gate will open after this popup");
+          this.showAlert("Correcte code!", "Treed binnen!");
         }
         else{
           console.log("Wrong Code");
-          this.showAlert("Wrong Code!", "Gate will not open. Try another");
+          this.showAlert("Verkeerde code!", "Poort zal niet openen. Probeer een andere?");
         }
       }
     }
