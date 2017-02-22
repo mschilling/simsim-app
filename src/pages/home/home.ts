@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
-import { DetailsPage } from '../details/details';
+
+import { RandomData } from '../../providers/random-data';
 
 @Component({
   selector: 'page-home',
@@ -9,7 +10,7 @@ import { DetailsPage } from '../details/details';
 })
 export class HomePage {
   passcode; icons; viewable; bgTemp; state;
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public dataCtrl: RandomData) {
     this.passcode = "";
     this.icons = [];
     this.viewable = true;
@@ -22,18 +23,9 @@ export class HomePage {
       this.passcode = this.passcode + value;
       this.icons.push(icon);
       if(this.passcode.length == 4){
-        if(this.passcode == "2468"){
-          console.log("Good Code");
-          this.state = "switch";
-          this.showAlert("Correcte code!", "Treed binnen!");
-        }
-        else{
-          console.log("Wrong Code");
-          this.showAlert("Verkeerde code!", "Poort zal niet openen. Probeer een andere?");
+          this.checkCode();
         }
       }
-    }
-    
   }
 
   delete(){
@@ -43,29 +35,26 @@ export class HomePage {
     }
   }
 
+  checkCode(){
+    this.dataCtrl.openGate(this.passcode).then(data => {
+      if(data == true){
+        this.showAlert("Correcte code!", "Treed binnen!");
+      }
+      else{
+        this.showAlert("Verkeerde code!", "Poort zal niet openen. Probeer een andere?");
+      }
+      this.passcode = "";
+      this.icons = [];
+    });
+  }
+
   showAlert(newTitle, newDescription) {
     let alert = this.alertCtrl.create({
       title: newTitle,
       subTitle: newDescription,
-      buttons: [
-      {
-        text: 'Ok',
-        handler: () => {
-          this.passcode = "";
-          this.icons = [];
-          if(this.state == "switch"){
-            //this.viewable = false;
-            //this.bgTemp = "matrix.gif";
-            this.navCtrl.setRoot(DetailsPage);
-          }
-          this.passcode = "";
-          this.icons = [];
-        }
-      }
-    ]
+      buttons: ['OK']
     });
     alert.present();
-
   }
 
   toggleView(){

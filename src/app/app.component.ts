@@ -3,10 +3,6 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
-import { DetailsPage } from '../pages/details/details';
-import { ApiPagePage } from '../pages/api-page/api-page';
-import { AccountPage } from '../pages/account/account';
-import { TutorialPage } from '../pages/tutorial/tutorial';
 
 
 @Component({
@@ -15,8 +11,6 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage = HomePage;
-  activePage;
-  pages: Array<{title: string, component: any}>;
 
   constructor(platform: Platform) {
     platform.ready().then(() => {
@@ -25,22 +19,5 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
     });
-    this.pages = [
-      {title: "Login", component: HomePage},
-      {title: "Details", component: DetailsPage},
-      {title: "API", component: ApiPagePage},
-      {title: "Account", component: AccountPage},
-      {title: "Tutorial", component: TutorialPage}
-    ];
-    this.activePage = this.pages[1];
-  }
-
-  openPage(page){
-    this.nav.setRoot(page.component);
-    this.activePage = page;
-  }
-
-  checkActive(page){
-    return page == this.activePage;
   }
 }
