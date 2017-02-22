@@ -7,7 +7,7 @@ export class RandomData {
 
   newData; traktInfo; movieInfo;
   constructor(public http: Http) {
-    
+
   }
 
   openGate(pinCode){
@@ -17,12 +17,12 @@ export class RandomData {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json; charset=utf-8');
     return new Promise(resolve => {
-      this.http.post('http://api.michaelschilling.com/gate/open', data, { headers: headers }).subscribe(response => {
+      this.http.post('https://api.michaelschilling.com/gate/open', data, { headers: headers }).subscribe(response => {
         resolve(true);
       }, error => {
         resolve(false);
       });
     })
-    
+
   }
 }
