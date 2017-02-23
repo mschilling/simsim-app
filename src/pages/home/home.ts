@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController } from 'ionic-angular';
+import { ToastController, LoadingController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 
 import { RandomData } from '../../providers/random-data';
@@ -9,61 +9,83 @@ import { RandomData } from '../../providers/random-data';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  passcode; icons; viewable; bgTemp; state;
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public dataCtrl: RandomData) {
+  passcode; icons; bgTemp; infoToUser; infoToUser2;
+  constructor(public navCtrl: NavController, public alertCtrl: ToastController, public dataCtrl: RandomData, public loadCtrl: LoadingController) {
     this.passcode = "";
     this.icons = [];
-    this.viewable = true;
-    this.bgTemp = "";
-    this.state = "normal";
+    this.bgTemp = "gate_1.png";
+    this.infoToUser = "Voer je pincode in.";
+    this.infoToUser2 = "Ik ben Simsim."
+    this.initIcons();
   }
 
   add(value, icon){
     if(this.passcode.length < 4){
       this.passcode = this.passcode + value;
-      this.icons.push(icon);
+      switch(this.passcode.length){
+        case 1:
+          this.icons[0] = icon;
+          break;
+        case 2:
+          this.icons[1] = icon;
+          break;
+        case 3:
+          this.icons[2] = icon;
+          break;
+        case 4:
+          this.icons[3] = icon;
+          break;
+      }
       if(this.passcode.length == 4){
-          this.checkCode();
+          this.checkCode(this.passcode);
         }
       }
   }
 
   delete(){
     if(this.passcode.length > 0){
+      this.bgTemp = "gate_1.png";
+      this.infoToUser = "Ik ben Simsim.";
+      this.infoToUser2 = "Voer je pincode in.";
       this.passcode = this.passcode.substring(0, this.passcode.length - 1);
-      this.icons.pop();
+      for(let i = 4; i > this.passcode.length; i--){
+        this.icons[i-1] = "oval.png";
+      }
     }
   }
 
-  checkCode(){
-    this.dataCtrl.openGate(this.passcode).then(data => {
+  checkCode(passcode){
+    let loader = this.loadCtrl.create({
+      content: "Sending Code..."
+    });
+    loader.present();
+    this.dataCtrl.openGate(passcode).then(data => {
       if(data == true){
-        this.showAlert("Correcte code!", "Treed binnen!");
+        this.showAlert("Correcte code!");
+        this.bgTemp = "gate_2.png";
+        this.infoToUser = "Treed Binnen!";
+        this.infoToUser2 = "Correcte pincode.";
       }
       else{
-        this.showAlert("Verkeerde code!", "Poort zal niet openen. Probeer een andere?");
+        this.showAlert("Verkeerde code!");
+        this.passcode = "";
+        this.initIcons();
       }
-      this.passcode = "";
-      this.icons = [];
+      loader.dismiss();
     });
   }
 
-  showAlert(newTitle, newDescription) {
+  showAlert(newMessage) {
     let alert = this.alertCtrl.create({
-      title: newTitle,
-      subTitle: newDescription,
-      buttons: ['OK']
+      message: newMessage,
+      duration: 2000
     });
     alert.present();
   }
 
-  toggleView(){
-    if(this.viewable == true){
-      this.viewable = false;
-    }
-    else{
-      this.viewable = true;
+  initIcons(){
+    for(let i = 0; i < 4; i++){
+      this.icons[i] = "oval.png";
     }
   }
-
 }

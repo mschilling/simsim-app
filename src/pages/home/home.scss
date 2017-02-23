@@ -1,5 +1,12 @@
 page-home{
+    max-width: 400px;
+    max-height: 800px;
+    color: white;
+    font-family: 'Compasse';
+}
 
+ion-content{
+    background-image: url('../../assets/img/hdpi/sky.png');
 }
 
 .bottom-div{
@@ -7,11 +14,97 @@ page-home{
     left: 0;
     right: 0;
     position: absolute;
-    background-color: white;
+    color: black;
+    font-size: 10px;
 }
 
 .top-div{
     font-size: 40px; 
     height: 50px;
-    text-align: center;
+    color: black;
+}
+
+.middle-div{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.codeButtonM{
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+}
+
+.codeButtonRow{
+    border-top: 1px solid #cccccc;
+}
+
+.codeButtonRow img{
+    height: 30px;
+    margin-top: 2px;
+}
+
+.fixBackground{
+    background-color: transparent;
+    position: relative;
+}
+
+.imgBottomRow{
+    height: 400px;
+    background-image: url('../../assets/img/hdpi/gate_1.png');
+    background-color: transparent !important;
+    background-size: 100% 400px;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.imgDiv{
+    width: 100%;
+    background-repeat: no-repeat;
+    background-image: url('../../assets/img/hdpi/grass.png');
+    background-size: 100% 40px;
+    position: absolute;
+    bottom: 0;
+}
+
+.imgDiv2{
+    width: 100%;
+    height: 40px;
+}
+
+.bgTransparent{
+    background-color: transparent !important;
+}
+
+.bgTransparent img{
+    width: 40px;
+    height: 40px;
+}
+
+ion-row{
+    background-color: white;
+}
+
+ion-icon{
+    font-size: 32px;
+    color: #a8a8a8;
+}
+
+ion-col{
+    margin: auto;
+    padding: 0px;
+}
+
+h1{
+    color: white;
+}
+
+ion-item{
+    height: 100px;
+}
+
+@font-face{
+    font-family: 'Compasse';
+    src: url('../../assets/font/Compasse-ExtraLight.otf');
 }

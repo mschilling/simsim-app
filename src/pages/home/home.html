@@ -1,49 +1,49 @@
-<ion-content padding text-center [ngStyle]="{'background-image': 'url(../../assets/img/' + bgTemp + ')'}">
-  <div *ngIf="viewable">
+<ion-content padding text-center>
+  <div>
     <div>
       <div>
-        <ion-item text-center>
-          Vul je code in.
+        <ion-item text-center no-lines class="bgTransparent">
+          <h1>{{infoToUser2}}</h1>
+          <h1>{{infoToUser}}</h1>
         </ion-item>
       </div>
       <div class="top-div">
-        <ion-row>
-          <ion-col width-25><ion-icon name="{{icons[0]}}"></ion-icon></ion-col>
-          <ion-col width-25><ion-icon name="{{icons[1]}}"></ion-icon></ion-col>
-          <ion-col width-25><ion-icon name="{{icons[2]}}"></ion-icon></ion-col>
-          <ion-col width-25><ion-icon name="{{icons[3]}}"></ion-icon></ion-col>
-        </ion-row>
-      </div>
-      <div>
-        <ion-row>
-          <ion-col width-25>___</ion-col>
-          <ion-col width-25>___</ion-col>
-          <ion-col width-25>___</ion-col>
-          <ion-col width-25>___</ion-col>
+        <ion-row class="bgTransparent">
+          <ion-col width-25><img src="../../assets/img/emoticons/{{icons[0]}}"/></ion-col>
+          <ion-col width-25><img src="../../assets/img/emoticons/{{icons[1]}}"/></ion-col>
+          <ion-col width-25><img src="../../assets/img/emoticons/{{icons[2]}}"/></ion-col>
+          <ion-col width-25><img src="../../assets/img/emoticons/{{icons[3]}}"/></ion-col>
         </ion-row>
       </div>
     </div>
     <div class="bottom-div">
-      <ion-row>
-        <ion-col width-33><button ion-button block outline icon-right (click)="add(1, 'heart')">Heart<ion-icon name="heart"></ion-icon></button></ion-col>
-        <ion-col width-33><button ion-button block outline icon-right (click)="add(2, 'aperture')">Aperture<ion-icon name="aperture"></ion-icon></button></ion-col>
-        <ion-col width-33><button ion-button block outline icon-right (click)="add(3, 'archive')">Archive<ion-icon name="archive"></ion-icon></button></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col width-33><button ion-button block outline icon-right (click)="add(4, 'baseball')">Baseball<ion-icon name="baseball"></ion-icon></button></ion-col>
-        <ion-col width-33><button ion-button block outline icon-right (click)="add(5, 'basket')">Basket<ion-icon name="basket"></ion-icon></button></ion-col>
-        <ion-col width-33><button ion-button block outline icon-right (click)="add(6, 'bicycle')">Bicycle<ion-icon name="bicycle"></ion-icon></button></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col width-33><button ion-button block outline icon-right (click)="add(7, 'boat')">Boat<ion-icon name="boat"></ion-icon></button></ion-col>
-        <ion-col width-33><button ion-button block outline icon-right (click)="add(8, 'body')">Body<ion-icon name="body"></ion-icon></button></ion-col>
-        <ion-col width-33><button ion-button block outline icon-right (click)="add(9, 'bug')">Bug<ion-icon name="bug"></ion-icon></button></ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col width-33><button ion-button block outline icon-right></button></ion-col>
-        <ion-col width-33><button ion-button block outline icon-right (click)="add(0, 'car')">Car<ion-icon name="car"></ion-icon></button></ion-col>
-        <ion-col width-33><button ion-button block outline icon-right (click)="delete()"><ion-icon name="backspace"></ion-icon></button></ion-col>
-      </ion-row>
+        <ion-row class="imgBottomRow" [ngStyle]="{'background-image': 'url(../../assets/img/hdpi/' + bgTemp + ')'}">
+          <div class="imgDiv">
+            <div class="imgDiv2"></div>
+          </div>
+        </ion-row>
+      <div>
+        <ion-row class="codeButtonRow">
+          <ion-col button width-33 codeButton (click)="add(1, 'apple_beer.png')"><img src="../../assets/img/emoticons/apple_beer.png"><br>Bier</ion-col>
+          <ion-col class = "codeButtonM" width-33 (click)="add(2, 'apple_chipmunk.png')"><img src="../../assets/img/emoticons/apple_chipmunk.png"><br>Eekhoorn</ion-col>
+          <ion-col width-33 (click)="add(3, 'apple_lollipop.png')"><img src="../../assets/img/emoticons/apple_lollipop.png"><br>Lolly</ion-col>
+        </ion-row>
+        <ion-row class="codeButtonRow">
+          <ion-col width-33 (click)="add(4, 'apple_helicopter.png')"><img src="../../assets/img/emoticons/apple_helicopter.png"><br>Helicopter</ion-col>
+          <ion-col class = "codeButtonM" width-33 (click)="add(5, 'apple_popcorn.png')"><img src="../../assets/img/emoticons/apple_popcorn.png"><br>Popcorn</ion-col>
+          <ion-col width-33 (click)="add(6, 'apple_klaver.png')"><img src="../../assets/img/emoticons/apple_klaver.png"><br>Klaver</ion-col>
+        </ion-row>
+        <ion-row class="codeButtonRow">
+          <ion-col width-33 (click)="add(7, 'apple_pizza.png')"><img src="../../assets/img/emoticons/apple_pizza.png"><br>Pizza</ion-col>
+          <ion-col class = "codeButtonM" width-33 (click)="add(8, 'apple_dice.png')"><img src="../../assets/img/emoticons/apple_dice.png"><br>Dobbelsteen</ion-col>
+          <ion-col width-33 (click)="add(9, 'apple_hammer.png')"><img src="../../assets/img/emoticons/apple_hammer.png"><br>Hamer</ion-col>
+        </ion-row>
+        <ion-row class="codeButtonRow">
+          <ion-col width-33 ></ion-col>
+          <ion-col class = "codeButtonM" width-33 (click)="add(0, 'apple_chicken.png')"><img src="../../assets/img/emoticons/apple_chicken.png"><br>Kip</ion-col>
+          <ion-col width-33 (click)="delete()"><ion-icon name="backspace"></ion-icon></ion-col>
+        </ion-row>
+      </div>
     </div>
   </div>
 </ion-content>
