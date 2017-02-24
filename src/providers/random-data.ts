@@ -11,7 +11,7 @@ export class RandomData {
 
   openGate(pinCode){
     return new Promise(resolve => {
-      this.af.database.list('gate/open').push({ code: pinCode })
+      this.af.database.list('gate/open').push({ code: pinCode, origin: "app" })
         .then( () => resolve(true))
         .catch( () => resolve(false))
     })

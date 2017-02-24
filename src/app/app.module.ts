@@ -6,7 +6,7 @@ import { HomePage } from '../pages/home/home';
 import { RandomData } from '../providers/random-data';
 
 // Import the AF2 Module
-import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFireModule } from 'angularfire2';
 
 // AF2 Settings
 export const firebaseConfig = {
