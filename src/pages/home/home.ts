@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ToastController, LoadingController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
-
 import { RandomData } from '../../providers/random-data';
 
 @Component({

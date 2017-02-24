@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {AngularFire} from 'angularfire2';
 
@@ -7,7 +6,7 @@ import {AngularFire} from 'angularfire2';
 export class RandomData {
 
   newData; traktInfo; movieInfo;
-  constructor(public http: Http, public af: AngularFire) { }
+  constructor(public af: AngularFire) { }
 
   openGate(pinCode){
     return new Promise(resolve => {
