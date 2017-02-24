@@ -11,6 +11,10 @@ import { RandomData } from '../../providers/random-data';
 export class HomePage {
   passcode; icons; bgTemp; infoToUser; infoToUser2;
   constructor(public navCtrl: NavController, public alertCtrl: ToastController, public dataCtrl: RandomData, public loadCtrl: LoadingController) {
+    this.initialize()
+  }
+
+  initialize() {
     this.passcode = "";
     this.icons = [];
     this.bgTemp = "gate_1.png";
@@ -65,6 +69,7 @@ export class HomePage {
         this.bgTemp = "gate_2.png";
         this.infoToUser = "Treed Binnen!";
         this.infoToUser2 = "Correcte pincode.";
+        setTimeout( () => { this.initialize() }, 3000)
       }
       else{
         this.showAlert("Verkeerde code!");
