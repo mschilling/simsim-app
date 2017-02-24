@@ -11,6 +11,10 @@ import { RandomData } from '../../providers/random-data';
 export class HomePage {
   passcode; icons; bgTemp; infoToUser; infoToUser2;
   constructor(public navCtrl: NavController, public alertCtrl: ToastController, public dataCtrl: RandomData, public loadCtrl: LoadingController) {
+    this.initialize()
+  }
+
+  initialize() {
     this.passcode = "";
     this.icons = [];
     this.bgTemp = "gate_1.png";
@@ -55,19 +59,18 @@ export class HomePage {
   }
 
   checkCode(passcode){
-    let loader = this.loadCtrl.create({
-      content: "Sending Code..."
-    });
+    let loader = this.loadCtrl.create({});
     loader.present();
     this.dataCtrl.openGate(passcode).then(data => {
       if(data == true){
         this.showAlert("Correcte code!");
         this.bgTemp = "gate_2.png";
         this.infoToUser = "Treed Binnen!";
-        this.infoToUser2 = "Correcte pincode.";
+        this.infoToUser2 = "Emoji code geaccepteerd";
+        setTimeout( () => { this.initialize() }, 3000)
       }
       else{
-        this.showAlert("Verkeerde code!");
+        this.showAlert("Deze Emoji code is niet bij ons bekend!");
         this.passcode = "";
         this.initIcons();
       }

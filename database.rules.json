@@ -1,6 +1,20 @@
 {
   "rules": {
     ".read": "auth != null",
-    ".write": "auth != null"
+    ".write": "auth != null",
+    "codes": {
+      ".read": "false",
+      ".write": "true"
+    },
+    "gate": {
+      ".read": "false",
+      ".write": "false",
+      "open": {
+        "$key": {
+          ".write": "true",
+          ".validate": "root.child('codes').child(newData.child('code').val()).exists()"
+        }
+      }
+    }
   }
 }

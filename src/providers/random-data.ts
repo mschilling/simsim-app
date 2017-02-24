@@ -1,28 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {AngularFire} from 'angularfire2';
 
 @Injectable()
 export class RandomData {
 
   newData; traktInfo; movieInfo;
-  constructor(public http: Http) {
-
-  }
+  constructor(public http: Http, public af: AngularFire) { }
 
   openGate(pinCode){
-    let data = JSON.stringify({
-      pin: pinCode
-    });
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json; charset=utf-8');
     return new Promise(resolve => {
-      this.http.post('https://api.michaelschilling.com/gate/open', data, { headers: headers }).subscribe(response => {
-        resolve(true);
-      }, error => {
-        resolve(false);
-      });
+      this.af.database.list('gate/open').push({ code: pinCode, origin: "app" })
+        .then( () => resolve(true))
+        .catch( () => resolve(false))
     })
-
   }
 }
