@@ -13,6 +13,7 @@ export class HomePage {
     this.initialize()
   }
 
+
   initialize() {
     this.passcode = "";
     this.icons = [];
