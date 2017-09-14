@@ -6,6 +6,10 @@
     "public": "platforms/browser/www",
     "rewrites": [
       {
+        "source": "/api/open",
+        "function": "openGate"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
