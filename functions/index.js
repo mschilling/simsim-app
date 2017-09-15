@@ -1,4 +1,6 @@
 const functions = require('firebase-functions');
+process.env.DEBUG = 'actions-on-google:*';
+const Assistant = require('actions-on-google').ApiAiAssistant;
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -14,5 +16,10 @@ exports.openGate = functions.https.onRequest((request, response) => {
  exports.assistantWebhook = functions.https.onRequest((request, response) => {
   console.log('headers: ' + JSON.stringify(request.headers));
   console.log('body: ' + JSON.stringify(request.body));
-  response.send(true);
+
+  let answer = "This is a sample response from your webhook!" 
+  
+  response.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
+  response.send(JSON.stringify({ "speech": answer, "displayText": answer 
+  }));
  });
