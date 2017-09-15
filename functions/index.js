@@ -10,3 +10,9 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 exports.openGate = functions.https.onRequest((request, response) => {
   response.send(":eyes:");
  });
+
+ exports.assistantWebhook = functions.https.onRequest((request, response) => {
+  console.log('headers: ' + JSON.stringify(request.headers));
+  console.log('body: ' + JSON.stringify(request.body));
+  response.send(true);
+ });
