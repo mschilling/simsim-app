@@ -28,6 +28,10 @@ class GateKeeperApi {
       return Promise.resolve(true)
     }
 
+    if(outgoingNumber) {
+      return Promise.resolve(true);
+    }
+
     const voiceUrl = 'https://api.michaelschilling.com/voice/default-message';
 
     return this.client.calls.create({
