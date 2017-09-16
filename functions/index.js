@@ -4,13 +4,6 @@ process.env.DEBUG = 'actions-on-google:*';
 const Assistant = require('actions-on-google').ApiAiAssistant;
 const moment = require('moment');
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-});
-
 exports.openGate = functions.https.onRequest((request, response) => {
   const accountSid = functions.config().twilio.sid
   const authToken = functions.config().twilio.token
