@@ -10,6 +10,10 @@
         "function": "openGate"
       },
       {
+        "source": "/api/assistant",
+        "function": "assistantWebhook"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
