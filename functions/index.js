@@ -1,36 +1,34 @@
 const functions = require('firebase-functions');
 const GateKeeperApi = require('./helpers/GateKeeperApi');
+
 process.env.DEBUG = 'actions-on-google:*';
 const Assistant = require('actions-on-google').ApiAiAssistant;
+
 const moment = require('moment');
 
 exports.assistantWebhook = functions.https.onRequest((request, response) => {
   console.log('headers: ' + JSON.stringify(request.headers));
   console.log('body: ' + JSON.stringify(request.body));
 
+  const assistant = new Assistant({request: request, response: response});
+
   //get the parameter from the response
-  let Code = request.body.result.parameters['Emotes']; // Emotes is a required parameter(so will never be empty)
   let passCode = request.body.result.parameters['password']; // passCode is a required parameter(so will never be empty)
+  
   const code = moment().utcOffset('+02:00').format('HHmm');
   console.log(`${code}/${passCode}`);
-  let textAnswer = `whoops, looks like something went wrong`; //default on screen answer
-  let speechAnswer = `whoops, looks like something went wrong`; //default spoken answer
 
-  if (Code == "succes" || passCode == code) {
-    textAnswer = `Alright, I'm opening the gate!`;
-    speechAnswer = `Alright. I'm opening the gate`;
+  if (passCode == code) {
     openGate().then(() => {
-      response.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
-      response.send(JSON.stringify({ "speech": speechAnswer, "displayText": textAnswer }));
-    });
-  } else {
-    textAnswer = `Looks like your code didn't work. Please try again`;
-    speechAnswer = `Looks like your code didn't work. Please try again`;
-
-    response.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
-    response.send(JSON.stringify({ "speech": speechAnswer, "displayText": textAnswer }));
-  }
-
+      assistant.setContext("succes");
+      let speech = `<speak> Alright, I'm opening the gate!. </speak>`;
+      assistant.tell(speech);
+      });
+    } else {
+      assistant.setContext("failure"); 
+      let speech = `<speak> Looks like your code didn't work. <break time="1"/> Please try again. </speak>`;
+      assistant.ask(speech, ['Please provide the 4 digit code']);
+    }
 });
 
 function openGate() {
