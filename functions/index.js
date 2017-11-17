@@ -44,8 +44,10 @@ exports.assistantWebhook = functions.https.onRequest((request, response) => {
           lat: deviceCoordinates.latitude,
           long: deviceCoordinates.longitude
         });
-        speech = `<speak> Alright, I'm opening the gate, but in debug mode. </speak>`;
-        assistant.tell(speech);
+        openGate().then(() => {
+          let speech = `<speak> Alright, I'm opening the gate.</speak>`;
+          assistant.tell(speech);
+        });
       } else {
         admin.database().ref('failedAttemps/' + userId + '/' + Date.now().toString()).set({
           user: displayName,
@@ -92,7 +94,7 @@ exports.assistantWebhook = functions.https.onRequest((request, response) => {
     console.log(assistant.getUser(), userId);
     //use this code to reset the uid field in the database if it no longer matches.
     //you should uncomment this line again when the right uid is in the database or it will change the database entry with every new device login.
-    //return admin.database().ref('session').set({uid2: userId});  
+    //return admin.database().ref('session').set({uid2: userId});
 
     //get the parameter from the response
     let passCode = request.body.result.parameters['password']; // passCode is a required parameter(so will never be empty)
