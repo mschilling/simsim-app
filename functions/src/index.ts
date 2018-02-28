@@ -1,24 +1,11 @@
 import * as functions from 'firebase-functions';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
-// const functions = require('firebase-functions');
 const GateKeeperApi = require('./helpers/GateKeeperApi');
 
 process.env.DEBUG = 'actions-on-google:*';
 const Assistant = require('actions-on-google').DialogflowApp;
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
-
-const ref = admin.database().ref('codes');
-const userRef = admin.database().ref('session');
-
-const moment = require('moment');
 
 exports.assistantWebhook = functions.https.onRequest((request, response) => {
   //console.log('headers: ' + JSON.stringify(request.headers));
@@ -129,6 +116,8 @@ function welcome(assistant) {
         }
         blacklistCheck++;
       })
+
+      console.log(whitelistCheck, blacklistCheck);
 
       if (check === 2) {
         const speech = `<speak> You are no longer allowed to use this feature! </speak>`;
