@@ -162,7 +162,7 @@ function location(assistant) {
 }
 
 function welcome(assistant) {
-  const userId = assistant.getUser().userId;
+  const userId = ( assistant.getUser() || {} ).userId;
   let check = 0;
   admin.database().ref('session/whitelist').once('value', ((userData) => {
     admin.database().ref('session/blacklist').once('value', ((blacklistData) => {
