@@ -57,6 +57,9 @@ exports.assistantWebhook = functions.https.onRequest((request, response) => {
         speech = "You do not have permission to open the gate";
         assistant.tell(speech);
       }
+    } else {
+      speech = "Sorry, you do not have permission to open the gate";
+      assistant.tell(speech);
     }
   }
 
