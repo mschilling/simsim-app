@@ -3,3 +3,4 @@ _*.js
 lib/
 creds.json
 node_modules/
+tools/
