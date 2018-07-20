@@ -25,7 +25,7 @@ export async function welcome(conv) {
     // Choose one or more supported permissions to request:
     // NAME, DEVICE_PRECISE_LOCATION, DEVICE_COARSE_LOCATION
     const options: any = {
-      context: 'To open the Gate',
+      context: 'To open the Move4Mobile gate',
       // Ask for more than one permission. User can authorize all or none.
       permissions: ['NAME', 'DEVICE_PRECISE_LOCATION'],
     };
@@ -44,8 +44,6 @@ async function isUserWhitelisted(userId: string): Promise<boolean> {
     .database()
     .ref(ref)
     .once('value');
-
-  console.log('isUserWhitelisted', snapshot.exists());
 
   return snapshot.exists();
 }
