@@ -1,31 +1,39 @@
 import * as admin from 'firebase-admin';
 import { openGate } from './helpers/open-gate';
+import { Permission } from 'actions-on-google';
 
-export async function welcome(assistant) {
+export async function welcome(conv) {
   console.log('Handle welcome intent');
-  const userId = (assistant.getUser() || {}).userId;
+  let userId = '';
+  if (conv.user) {
+    userId = conv.user.id;
+  }
   console.log('userId=' + userId);
 
   const bUserIsWhitelisted = await isUserWhitelisted(userId);
 
   if (bUserIsWhitelisted) {
     openGate().then(() => {
-      const speech = `<speak> Alright, I'm opening the gate! </speak>`;
-      assistant.tell(speech);
+      const speech = `<speak> Alright, I'm opening the gate!</speak>`;
+      conv.close(speech);
     });
   } else {
-    //not banned or whitelisted, ask for location permission
-    const namePermission = assistant.SupportedPermissions.NAME;
-    const preciseLocationPermission =
-      assistant.SupportedPermissions.DEVICE_PRECISE_LOCATION;
-    assistant.askForPermissions('To open the gate', [
-      namePermission,
-      preciseLocationPermission,
-    ]);
+    // Choose one or more supported permissions to request:
+    // NAME, DEVICE_PRECISE_LOCATION, DEVICE_COARSE_LOCATION
+    const options: any = {
+      context: 'To open the Gate',
+      // Ask for more than one permission. User can authorize all or none.
+      permissions: ['NAME', 'DEVICE_PRECISE_LOCATION'],
+    };
+    conv.ask(new Permission(options));
   }
 }
 
 async function isUserWhitelisted(userId: string): Promise<boolean> {
+  if(!userId) {
+    return false;
+  }
+
   const ref = `session/whitelist/${userId}`;
   console.log('Checking isUserWhitelisted for ref ' + ref);
   const snapshot = await admin

@@ -1,16 +1,30 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+admin.initializeApp(functions.config().firebase);
+
+import { dialogflow } from 'actions-on-google';
 import { welcome } from './welcome-intent';
 import { location } from './location-intent';
 
-// process.env.DEBUG = 'actions-on-google:*';
-const Assistant = require('actions-on-google').DialogflowApp;
-admin.initializeApp(functions.config().firebase);
-
-exports.assistantWebhook = functions.https.onRequest((request, response) => {
-  const assistant = new Assistant({ request: request, response: response });
-  const actionMap = new Map();
-  actionMap.set('input.welcome', welcome);
-  actionMap.set('input.location', location);
-  assistant.handleRequest(actionMap);
+const app = dialogflow({
+  debug: true,
+  init: () => ({
+    data: {
+      fallbackCount: 0,
+      noInputCount: 0,
+      noInputResponses: [],
+      fallbackResponses: [],
+      currentItems: [],
+      nextItems: [],
+      sessionType: null,
+      sessionShown: null,
+      sessionsTag: null,
+      tagId: null,
+    },
+  }),
 });
+
+app.intent('open_gate', welcome);
+app.intent('actions.intent.PERMISSION', location);
+
+exports.assistantWebhook = functions.https.onRequest(app);

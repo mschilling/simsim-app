@@ -3,16 +3,17 @@ import * as admin from 'firebase-admin';
 import { getDistanceFromLatLonInKm } from './helpers/utils';
 import { openGate } from './helpers/open-gate';
 
-export function location(assistant) {
+export function location(conv, params, confirmationGranted) {
   console.log('Handle location intent');
   let speech;
   let userId = '';
-  if (assistant.getUser()) {
-    userId = assistant.getUser().userId;
+  if (conv.user) {
+    console.log(conv.user, conv.device, conv.location);
+    userId = conv.user.id;
   }
-  if (assistant.isPermissionGranted()) {
-    const deviceCoordinates = assistant.getDeviceLocation().coordinates;
-    const displayName = assistant.getUserName().displayName;
+  if (confirmationGranted) {
+    const deviceCoordinates = conv.device.location.coordinates;
+    const displayName = conv.user.name.display;
     console.log(displayName);
     console.log(deviceCoordinates.latitude + ',' + deviceCoordinates.longitude);
 
@@ -40,7 +41,7 @@ export function location(assistant) {
         });
       openGate().then(() => {
         speech = `<speak> Alright, I'm opening the gate! </speak>`;
-        assistant.tell(speech);
+        conv.close(speech);
       });
     } else {
       admin
@@ -53,10 +54,10 @@ export function location(assistant) {
           long: deviceCoordinates.longitude,
         });
       speech = 'You do not have permission to open the gate';
-      assistant.tell(speech);
+      conv.close(speech);
     }
   } else {
     speech = 'Sorry, you do not have permission to open the gate';
-    assistant.tell(speech);
+    conv.tell(speech);
   }
 }
