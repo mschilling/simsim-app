@@ -10,41 +10,49 @@ export async function location(conv, params, confirmationGranted) {
     console.log(conv.user, conv.device, conv.location);
     userId = conv.user.id;
   }
-  if (confirmationGranted) {
-    const { latitude, longitude } = conv.device.location.coordinates;
-    const displayName = conv.user.name.display;
-    console.log(displayName);
-    console.log(latitude + ',' + longitude);
-
-    const distance = getDistanceFromLatLonInKm(
-      latitude,
-      longitude,
-      52.508338,
-      6.0902274
-    );
-
-    //check if the user is within 1km of Move4Mobile in Zwolle
-    //logs all attempts succesfull or not
-    //the userId represents the google account/assistantID
-    if (distance < 1) {
-      await logResult(true, userId, displayName, latitude, longitude);
-
-      try {
-        await openGate();
-        conv.close(`<speak> Alright, I'm opening the gate! </speak>`);
-      } catch (e) {
-        conv.close(
-          `<speak>Sorry, something went wrong. Try again soon.</speak>`
-        );
-        console.log(e);
-      }
-    } else {
-      await logResult(false, userId, displayName, latitude, longitude);
-      conv.close('You do not have permission to open the gate');
-    }
-  } else {
-    conv.tell('Sorry, you do not have permission to open the gate');
+  if (!confirmationGranted) {
+    conv.close('Sorry, you do not have permission to open the gate');
+    return;
   }
+
+  const { latitude, longitude } = conv.device.location.coordinates;
+  console.log(latitude + ',' + longitude);
+
+  const displayName = conv.user.name.display;
+  console.log(displayName);
+
+  const userIsClose = isNearGate(latitude, longitude);
+
+  if (!userIsClose) {
+    await logResult(false, userId, displayName, latitude, longitude);
+    conv.close('You do not have permission to open the gate');
+    return;
+  }
+
+  //logs all attempts succesfull or not
+  //the userId represents the google account/assistantID
+  try {
+    await logResult(true, userId, displayName, latitude, longitude);
+    await openGate();
+    conv.close(`<speak> Alright, I'm opening the gate! </speak>`);
+  } catch (e) {
+    conv.close(
+      `<speak>Sorry, something went wrong. Please try again later.</speak>`
+    );
+    console.log(e);
+  }
+}
+
+function isNearGate(latitude, longitude): boolean {
+  const distance = getDistanceFromLatLonInKm(
+    latitude,
+    longitude,
+    52.508338,
+    6.0902274
+  );
+
+  //check if the user is within 1km of Move4Mobile in Zwolle
+  return distance < 1;
 }
 
 async function logResult(success, userId, displayName, lat, lng) {
