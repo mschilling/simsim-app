@@ -1,21 +1,41 @@
 import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 import * as express from 'express';
 import { openGate } from './helpers/open-gate';
+import { Logger } from './helpers/logger';
 
 const app = express();
 
 app.use('/open', authHandler, async (req, res) => {
+  const payload = req.body || {};
+
   try {
     await openGate();
     res.json({
       text: 'Okay, de slagboom wordt voor je opengegooid ' + randomEmoji(),
     });
+
   } catch (e) {
     res.json({
       text: 'Oops, dat ging niet helemaal goed :sad_pepe:',
     });
     console.log(e);
   }
+
+  try {
+    const username = payload.user_name || 'unknown_user';
+    const text = payload.text;
+
+    const logger = new Logger(admin.firestore());
+    await logger.logEvent(
+      `${username} opened the gate`,
+      { user: username, comment: text },
+      'slack'
+    );
+  } catch(e) {
+    console.log(e);
+  }
+
 });
 
 function randomEmoji() {
