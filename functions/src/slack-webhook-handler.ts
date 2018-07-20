@@ -5,9 +5,21 @@ const app = express();
 
 app.use('/open', authHandler, async (req, res) => {
   res.json({
-    text: 'Okay, de slagboom wordt voor je opengegooid!'
+    text: 'Okay, de slagboom wordt voor je opengegooid ' + randomEmoji()
   });
 });
+
+function randomEmoji() {
+  const emojis = [
+    ':rabo-algemeen-ik-ga-starten:',
+    ':thumbsup:',
+    ':tada:',
+    ':magic:',
+    ':shia:'
+  ]
+  const index = (Math.ceil(Math.random() * emojis.length)) - 1;
+  return emojis[index];
+}
 
 function authHandler(req, res, next) {
   if (req.method !== 'POST') {
