@@ -4,6 +4,7 @@ import { getDistanceFromLatLonInKm } from './helpers/utils';
 import { openGate } from './helpers/open-gate';
 
 export function location(assistant) {
+  console.log('Handle location intent');
   let speech;
   let userId = '';
   if (assistant.getUser()) {
