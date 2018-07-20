@@ -1,18 +1,10 @@
-'use strict';
-
-// const functions = require('firebase-functions');
-// const admin = require('firebase-admin');
-// admin.initializeApp(functions.config().firebase);
 
 const twilio = require('twilio');
-let accountSid;
-let authToken;
-let twilioNumber;
 
-let client;
+export class GateKeeperApi {
+  client;
 
-class GateKeeperApi {
-  constructor(accountSid, authToken, twilioNumber) {
+  constructor(private accountSid, private authToken, private twilioNumber) {
     this.accountSid = accountSid;
     this.authToken = authToken;
     this.twilioNumber = twilioNumber;
@@ -47,5 +39,3 @@ class GateKeeperApi {
     });
   }
 }
-
-module.exports = GateKeeperApi;
