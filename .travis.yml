@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- '8.6'
+- '8.7'
 dist: trusty
 before_script:
 - npm list -g cordova --depth=0 || npm install -g cordova
@@ -21,3 +21,6 @@ cache:
     - $(npm config get prefix)/bin/ionic
     - $(npm config get prefix)/bin/firebase-tools
     - node_modules
+notifications:
+  email: false
+  webhooks: https://travis.webhooks.m4m.io
