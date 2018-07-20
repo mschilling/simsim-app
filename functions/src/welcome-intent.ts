@@ -13,10 +13,14 @@ export async function welcome(conv) {
   const bUserIsWhitelisted = await isUserWhitelisted(userId);
 
   if (bUserIsWhitelisted) {
-    openGate().then(() => {
+    try {
+      await openGate();
       const speech = `<speak> Alright, I'm opening the gate!</speak>`;
       conv.close(speech);
-    });
+    } catch (e) {
+      conv.close(`<speak>Sorry, something went wrong. Try again soon.</speak>`);
+      console.log(e);
+    }
   } else {
     // Choose one or more supported permissions to request:
     // NAME, DEVICE_PRECISE_LOCATION, DEVICE_COARSE_LOCATION
@@ -30,7 +34,7 @@ export async function welcome(conv) {
 }
 
 async function isUserWhitelisted(userId: string): Promise<boolean> {
-  if(!userId) {
+  if (!userId) {
     return false;
   }
 

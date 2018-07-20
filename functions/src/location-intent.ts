@@ -5,21 +5,20 @@ import { openGate } from './helpers/open-gate';
 
 export async function location(conv, params, confirmationGranted) {
   console.log('Handle location intent');
-  let speech;
   let userId = '';
   if (conv.user) {
     console.log(conv.user, conv.device, conv.location);
     userId = conv.user.id;
   }
   if (confirmationGranted) {
-    const deviceCoordinates = conv.device.location.coordinates;
+    const { latitude, longitude } = conv.device.location.coordinates;
     const displayName = conv.user.name.display;
     console.log(displayName);
-    console.log(deviceCoordinates.latitude + ',' + deviceCoordinates.longitude);
+    console.log(latitude + ',' + longitude);
 
     const distance = getDistanceFromLatLonInKm(
-      deviceCoordinates.latitude,
-      deviceCoordinates.longitude,
+      latitude,
+      longitude,
       52.508338,
       6.0902274
     );
@@ -28,33 +27,27 @@ export async function location(conv, params, confirmationGranted) {
     //logs all attempts succesfull or not
     //the userId represents the google account/assistantID
     if (distance < 1) {
-      await logResult(
-        true,
-        userId,
-        displayName,
-        deviceCoordinates.latitude,
-        deviceCoordinates.longitude
-      );
-      openGate().then(() => {
+      await logResult(true, userId, displayName, latitude, longitude);
+
+      try {
+        await openGate();
         conv.close(`<speak> Alright, I'm opening the gate! </speak>`);
-      });
+      } catch (e) {
+        conv.close(
+          `<speak>Sorry, something went wrong. Try again soon.</speak>`
+        );
+        console.log(e);
+      }
     } else {
-      await logResult(
-        false,
-        userId,
-        displayName,
-        deviceCoordinates.latitude,
-        deviceCoordinates.longitude
-      );
+      await logResult(false, userId, displayName, latitude, longitude);
       conv.close('You do not have permission to open the gate');
     }
   } else {
-    speech = 'Sorry, you do not have permission to open the gate';
-    conv.tell(speech);
+    conv.tell('Sorry, you do not have permission to open the gate');
   }
 }
 
-async function logResult(success, userId, displayName, latitude, longitude) {
+async function logResult(success, userId, displayName, lat, lng) {
   let ref;
   if (success) {
     ref = 'log/success/' + displayName + userId + '/' + Date.now().toString();
@@ -68,7 +61,7 @@ async function logResult(success, userId, displayName, latitude, longitude) {
     .set({
       user: displayName,
       userId: userId,
-      lat: latitude,
-      long: longitude,
+      lat: lat,
+      long: lng,
     });
 }
