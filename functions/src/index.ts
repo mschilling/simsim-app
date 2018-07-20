@@ -5,6 +5,7 @@ admin.initializeApp(functions.config().firebase);
 import { dialogflow } from 'actions-on-google';
 import { welcome } from './welcome-intent';
 import { location } from './location-intent';
+import { slackWebhookHandler } from './slack-webhook-handler';
 
 const app = dialogflow({
   debug: true,
@@ -27,4 +28,7 @@ const app = dialogflow({
 app.intent('open_gate', welcome);
 app.intent('actions.intent.PERMISSION', location);
 
-exports.assistantWebhook = functions.https.onRequest(app);
+export const assistantWebhook = functions.https.onRequest(app);
+
+// Handle Slack webhooks
+export const slackWebhook = functions.https.onRequest(slackWebhookHandler);
