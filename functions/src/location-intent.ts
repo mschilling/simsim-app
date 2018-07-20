@@ -7,7 +7,6 @@ export async function location(conv, params, confirmationGranted) {
   console.log('Handle location intent');
   let userId = '';
   if (conv.user) {
-    console.log(conv.user, conv.device, conv.location);
     userId = conv.user.id;
   }
   if (!confirmationGranted) {
