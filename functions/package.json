@@ -9,7 +9,7 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "build": "npm run lint && tsc && npm run build:i18n",
-    "build:i18n": "cpx locales/**/*.json lib/locales"
+    "build:i18n": "cpx src/locales/**/*.json lib/locales"
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -23,10 +23,10 @@
     "firebase-functions": "^1.0.3",
     "i18n": "^0.8.3",
     "moment": "^2.22.2",
-    "twilio": "^3.18.0"
+    "twilio": "^3.18.0",
+    "cpx": "^1.5.0"
   },
   "devDependencies": {
-    "cpx": "^1.5.0",
     "tslint": "^5.11.0",
     "typescript": "^2.9.2"
   },
