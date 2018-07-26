@@ -7,6 +7,14 @@ import { welcome } from './welcome-intent';
 import { location } from './location-intent';
 import { slackWebhookHandler } from './slack-webhook-handler';
 
+const moment = require('moment');
+
+i18n.configure({
+  locales: ['en-US', 'nl-NL'],
+  directory: __dirname + '/locales',
+  defaultLocale: 'en-US',
+});
+
 const app = dialogflow({
   debug: true,
   init: () => ({
@@ -23,6 +31,13 @@ const app = dialogflow({
       tagId: null,
     },
   }),
+});
+
+app.middleware(conv => {
+  if (conv.user) {
+    i18n.setLocale(conv.user.locale);
+    moment.locale(conv.user.locale);
+  }
 });
 
 app.intent('open_gate', welcome);
