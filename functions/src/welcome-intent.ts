@@ -23,14 +23,19 @@ export async function welcome(conv) {
         })
       );
     } catch (e) {
-      conv.close(`<speak>Sorry, something went wrong. Try again soon.</speak>`);
+      conv.close(
+        new SimpleResponse({
+          text: i18n.__('open_gate_error'),
+          speech: i18n.__('open_gate_error'),
+        })
+      );
       console.log(e);
     }
   } else {
     // Choose one or more supported permissions to request:
     // NAME, DEVICE_PRECISE_LOCATION, DEVICE_COARSE_LOCATION
     const options: any = {
-      context: 'To open the Move4Mobile gate',
+      context: i18n.__('request_permission_text'),
       // Ask for more than one permission. User can authorize all or none.
       permissions: ['NAME', 'DEVICE_PRECISE_LOCATION'],
     };

@@ -2,6 +2,7 @@ import * as admin from 'firebase-admin';
 
 import { getDistanceFromLatLonInKm } from './helpers/utils';
 import { openGate } from './helpers/open-gate';
+import { SimpleResponse } from 'actions-on-google';
 
 export async function location(conv, params, confirmationGranted) {
   console.log('Handle location intent');
@@ -10,7 +11,7 @@ export async function location(conv, params, confirmationGranted) {
     userId = conv.user.id;
   }
   if (!confirmationGranted) {
-    conv.close('Sorry, you do not have permission to open the gate');
+    conv.close(i18n.__('open_gate_no_permission'));
     return;
   }
 
@@ -24,7 +25,7 @@ export async function location(conv, params, confirmationGranted) {
 
   if (!userIsClose) {
     await logResult(false, userId, displayName, latitude, longitude);
-    conv.close('You do not have permission to open the gate');
+    conv.close(i18n.__('open_gate_no_permission'));
     return;
   }
 
@@ -33,10 +34,18 @@ export async function location(conv, params, confirmationGranted) {
   try {
     await logResult(true, userId, displayName, latitude, longitude);
     await openGate();
-    conv.close(`<speak> Alright, I'm opening the gate! </speak>`);
+    conv.close(
+      new SimpleResponse({
+        text: i18n.__('open_gate_success'),
+        speech: i18n.__('open_gate_success_ssml'),
+      })
+    );
   } catch (e) {
     conv.close(
-      `<speak>Sorry, something went wrong. Please try again later.</speak>`
+      new SimpleResponse({
+        text: i18n.__('open_gate_error'),
+        speech: i18n.__('open_gate_error'),
+      })
     );
     console.log(e);
   }
