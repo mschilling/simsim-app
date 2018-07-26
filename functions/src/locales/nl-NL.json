@@ -1,0 +1,6 @@
+{
+  "welcome_message": "Hi!",
+
+  "open_gate_success": "Slagboom wordt geopend!",
+  "open_gate_success_ssml": "Ok, de slagboom wordt geopend!"
+}

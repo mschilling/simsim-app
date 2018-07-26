@@ -1,6 +1,7 @@
+import * as i18n from 'i18n';
 import * as admin from 'firebase-admin';
 import { openGate } from './helpers/open-gate';
-import { Permission } from 'actions-on-google';
+import { Permission, SimpleResponse } from 'actions-on-google';
 
 export async function welcome(conv) {
   console.log('Handle welcome intent');
@@ -15,8 +16,12 @@ export async function welcome(conv) {
   if (bUserIsWhitelisted) {
     try {
       await openGate();
-      const speech = `<speak> Alright, I'm opening the gate!</speak>`;
-      conv.close(speech);
+      conv.close(
+        new SimpleResponse({
+          text: i18n.__('open_gate_success'),
+          speech: i18n.__('open_gate_success_ssml'),
+        })
+      );
     } catch (e) {
       conv.close(`<speak>Sorry, something went wrong. Try again soon.</speak>`);
       console.log(e);
