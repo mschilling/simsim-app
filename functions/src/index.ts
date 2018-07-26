@@ -1,3 +1,4 @@
+import * as i18n from 'i18n';
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 admin.initializeApp(functions.config().firebase);
