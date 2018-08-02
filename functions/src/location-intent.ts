@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin';
+import * as i18n from 'i18n';
 
 import { getDistanceFromLatLonInKm } from './helpers/utils';
 import { openGate } from './helpers/open-gate';

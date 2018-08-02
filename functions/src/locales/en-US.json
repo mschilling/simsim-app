@@ -2,5 +2,10 @@
   "welcome_message": "Hi!",
 
   "open_gate_success": "Opening the gate!",
-  "open_gate_success_ssml": "Alright, I'm opening the gate!"
+  "open_gate_success_ssml": "Alright, I'm opening the gate!",
+
+  "open_gate_error": "Sorry, something went wrong. Try again soon.",
+  "open_gate_no_permission": "Sorry, you do not have permission to open the gate",
+
+  "request_permission_text": "To open the Move4Mobile gate"
 }

@@ -2,5 +2,10 @@
   "welcome_message": "Hi!",
 
   "open_gate_success": "Slagboom wordt geopend!",
-  "open_gate_success_ssml": "Ok, de slagboom wordt geopend!"
+  "open_gate_success_ssml": "Ok, de slagboom wordt geopend!",
+
+  "open_gate_error": "Sorry, er ging iets mis. Probeer het later opnieuw.",
+  "open_gate_no_permission": "Sorry, je hebt geen toestemming om de slagboom te openen",
+
+  "request_permission_text": "Op de Move4Mobile slagboom te openen"
 }
