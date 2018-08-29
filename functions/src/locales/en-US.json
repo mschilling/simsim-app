@@ -5,7 +5,8 @@
   "open_gate_success_ssml": "Alright, I'm opening the gate!",
 
   "open_gate_error": "Sorry, something went wrong. Try again soon.",
-  "open_gate_no_permission": "Sorry, you do not have permission to open the gate",
+  "open_gate_no_permission": "Sorry, you do not have permission to open the gate.",
+  "open_gate_out_of_range": "Sorry, you do not have permission to open the gate. You seem to be too far away from the gate.",
 
   "request_permission_text": "To open the Move4Mobile gate"
 }

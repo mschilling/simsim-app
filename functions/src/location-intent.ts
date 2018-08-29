@@ -26,7 +26,7 @@ export async function location(conv, params, confirmationGranted) {
 
   if (!userIsClose) {
     await logResult(false, userId, displayName, latitude, longitude);
-    conv.close(i18n.__('open_gate_no_permission'));
+    conv.close(i18n.__('open_gate_out_of_range'));
     return;
   }
 
